@@ -1,0 +1,10 @@
+<apex:page >
+    <h1> Sample002 HelloWorld2 </h1>
+    <br/>><br/>
+    <apex:outputText value="개발자 콘솔 테스트" />
+    
+    <br/><br/>
+    <apex:outputLink value="{!URLFOR($Page.HelloWorld1)}">
+        <apex:outputText value="Browser 에서 최초로 만든 Visualforce 페이지로 이동" />
+     </apex:outputLink>
+</apex:page>

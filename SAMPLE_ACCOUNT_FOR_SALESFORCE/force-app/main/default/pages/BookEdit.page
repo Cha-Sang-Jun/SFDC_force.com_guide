@@ -1,0 +1,41 @@
+<apex:page controller="CntrlBookEdit" sidebar="false">
+    <apex:form id="form">
+        <apex:sectionHeader title="도서 편집 정보"/>
+        <apex:pageMessages id="messagearea" showDetail="false"/>
+
+        <apex:pageBlock rendered="{!NOT(ISBLANK(book))}">
+        	<apex:pageBlockButtons >
+                <apex:commandButton value="저장" action="{!save}"/>
+                <apex:commandButton value="취소" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+
+            <!-- 도서 정보 -->
+            <apex:pageBlockSection columns="1" showHeader="true" collapsible="true" title="도서 정보">
+                <!-- <apex:inputField> : 자동적으로 레코드의 데이터 타입에 맞는 형식으로 표시해주는 태그
+                    ※무조건 개체의 "레코드 변수"로만 사용 가능
+                -->
+
+                <apex:pageBlockSectionItem labelStyle="padding-top:5px;">
+                    <apex:outputText value="도서 번호"/>
+                	<!-- 필수 항목란 표시 설정-->
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputField value="{!book.BookNo__c}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem labelStyle="padding-top:5px;">
+                    <apex:outputText value="도서명"/>
+                    <apex:outputPanel layout="block" styleClass="requiredInput">
+                        <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                        <apex:inputField value="{!book.Name}"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+
+                <apex:inputField value="{!book.BookType__c}" label="도서 구분"/>
+                <apex:inputField value="{!book.Author__c}" label="저자"/>
+                <apex:inputField value="{!book.Publisher__c}" label="출판사"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

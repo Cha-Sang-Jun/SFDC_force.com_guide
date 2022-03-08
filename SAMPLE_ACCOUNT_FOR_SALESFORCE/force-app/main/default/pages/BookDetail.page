@@ -1,0 +1,23 @@
+<apex:page controller="CntrlBookDetail" sidebar="false">
+	<apex:form id="form">
+        <apex:sectionHeader title="도서 상세 정보"/>
+        <apex:pageMessages id="messagearea" showDetail="false"/>
+
+        <apex:pageBlock rendered="{!NOT(ISBLANK(book))}">
+        	<apex:pageBlockButtons >
+                <apex:commandButton value="편집" action="{!edit}"/>
+                <apex:commandButton value="삭제" action="{!del}" onclick="if(confirm('삭제하시겠습니까?')){return true;};return false;"/>
+                <apex:commandButton value="돌아가기" action="{!returnPage}"/>
+            </apex:pageBlockButtons>
+
+            <!-- 도서 정보 -->
+            <apex:pageBlockSection columns="1" showHeader="true" collapsible="true" title="도서 정보">
+                <apex:outputField value="{!book.BookNo__c}" label="도서 번호"/>
+                <apex:outputField value="{!book.Name}" label="도서명"/>
+                <apex:outputField value="{!book.BookType__c}" label="도서 구분"/>
+                <apex:outputField value="{!book.Author__c}" label="저자"/>
+                <apex:outputField value="{!book.Publisher__c}" label="출판사"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

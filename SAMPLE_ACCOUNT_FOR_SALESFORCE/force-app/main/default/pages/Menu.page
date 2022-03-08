@@ -1,0 +1,18 @@
+<apex:page controller="CntrlMenu" sidebar="false">
+	<style>
+	.cmdBtn {
+	     width     : 400px;
+	     height    : 50px;
+	}
+	</style>
+
+	<apex:form id="form">
+    	<center>
+            <apex:outputText value="도서 관리 프로그램" style="font-size:20pt; font-weight:bold;"/>
+            <br/><br/><br/>
+
+            <!-- 도서 검색 화면으로 화면전이 및 이전 화면 URL을 파라미터로 전달 -->
+            <apex:commandButton value="도서 관리" action="{!URLFOR($Page.BookSearch, null, [retURL=currentUrl])}" styleClass="cmdBtn" style="font-size:20pt;"/>
+        </center>
+  	</apex:form>
+</apex:page>

@@ -1,0 +1,68 @@
+<apex:page controller="CntrlMemberEdit" sidebar="false">
+    <apex:form id="form">
+        <apex:sectionHeader title="회원 편집 정보" />
+        <apex:pageMessages id="messagearea" showDetail="fales" />
+    </apex:form>
+
+    <apex:pageBlock rendered="{!NOT(ISBLANK(member))}">
+        <apex:pageBlockButtons>
+            <apex:commandButton value="저장" action="{!save}" />
+            <apex:commandButton value="취소" action="{!cancel}" />
+        </apex:pageBlockButtons>
+
+        <!-- 회원 정보 -->
+        <apex:pageBlockSection columns="1" showHeader="true" collapsible="true" title="회원 정보">
+            <!-- <apex:inputField> : 자동적으로 레코드의 데이터 타입에 맞는 형식으로 표시해주는 태그
+                ## 무조건 개체의 "레코드 변수" 로만 사용 가능 -->
+
+            <apex:pageBlockSectionItem labelStyle="padding-top:5px;">
+                <apex:outputText value="회원명" />
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock" />
+                    <apex:inputField value="{!member.Name}" />
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+
+            <apex:inputField value="{!member.RegistDate__C}" label="회원 등록일" />
+            <apex:inputField value="{!member.Phone__c}" label="전화번호" />
+            <apex:inputField value="{!member.Email__c}" label="이메일 주소" />
+
+            <apex:pageBlockSectionItem>
+                <apex:outputText value="대여 유무" />
+                <apex:selectList value="{!member.IsLental__c}" size="1">
+                    <apex:selectOptions value="{!isLentalSelItems}" />
+                </apex:selectList>
+            </apex:pageBlockSectionItem>
+
+            <apex:inputField value="{!member.ReturnBook__c}" label="반납 유무" />
+        </apex:pageBlockSection>
+
+        <!-- 대여 도서 목록 -->
+        <apex:pageBlockSection columns="1" showHeader="true" collapsible="true" title="대여 중인 도서">
+
+            <apex:outputText value="대여 중인 도서가 없습니다." rendered="{!borrowBookList.size == 0}" />
+
+            <!-- 대여 도서 목록을 표 형식으로 표시 -->
+            <apex:pageBlockTable value="{!borrowBookList}" var="bBook" rendered="{!borrowBookList.size > 0} ">
+                <apex:column value="{!bBook.BookNo__c}" />
+                <apex:column value="{!bBook.Name}" />
+                <apex:column value="{!bBook.BookType__c}" />
+                <apex:column value="{!bBook.Author__c}" />
+                <apex:column value="{!bBook.Publisher__c}" />
+
+
+                <apex:column>
+                    <apex:facet name="header"> 대여일 </apex:facet>
+                    <apex:outputText value="{!TEXT(YEAR(bBook.LentDate__c)) + '/' + LPAD(TEXT(MONTH(bBook.LentDate__c)), 2, '0') + '/' + LPAD(TEXT(DAY(bBook.LentDate__c)), 2, '0')}"
+                    />
+                </apex:column>
+
+                <apex:column>
+                    <apex:facet name="header"> 반납일 </apex:facet>
+                    <apex:outputText value="{!TEXT(YEAR(bBook.RentalDate__c)) + '/' + LPAD(TEXT(MONTH(bBook.RentalDate__c)), 2, '0') + '/' + LPAD(TEXT(DAY(bBook.RentalDate__c)), 2, '0')}"
+                    />
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>

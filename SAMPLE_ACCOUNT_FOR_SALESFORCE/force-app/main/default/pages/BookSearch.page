@@ -1,0 +1,68 @@
+<apex:page controller="CntrlBookSearch" sidebar="false">
+    <apex:form id="form">
+        <apex:sectionHeader title="도서 검색"/>
+        <apex:pageMessages id="messagearea" showDetail="false"/>
+
+        <apex:pageBlock title="검색 조건" mode="edit">
+
+            <!-- 생성한 블록의 하단에 버튼을 추가 -->
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="검색" action="{!search}"/>
+                <apex:commandButton value="돌아가기" action="{!returnPage}"/>
+            </apex:pageBlockButtons>
+
+        	<!-- 검색 조건 -->
+            <apex:pageBlockSection columns="1" showHeader="true">
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="도서 번호"/>
+                    <apex:inputText value="{!srchCndtnBookNo}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="도서명"/>
+                    <apex:inputText value="{!srchCndtnBookName}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="도서 구분"/>
+                    <apex:selectList value="{!srchCndtnBookType}" size="1">
+                        <apex:selectOptions value="{!bookTypeSelItems}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="저자"/>
+                    <apex:inputText value="{!srchCndtnAuthor}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="출판사"/>
+                    <apex:inputText value="{!srchCndtnPublisher}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <!-- 검색 결과 -->
+        <apex:pageBlock title="검색 결과">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="도서 추가" action="{!newBook}"/>
+            </apex:pageBlockButtons>
+
+            <!-- 검색 결과를 표 형식으로 표시 -->
+            <apex:pageBlockTable value="{!srchRsltBookList}" var="result" rendered="{!srchRsltBookList.size > 0}">
+
+                <apex:column style="width:3%;">
+                    <apex:facet name="header">상세</apex:facet>
+                    <apex:commandLink value="상세" action="{!URLFOR($Page.BookDetail, null, [bookId=result.Id, retURL=currentUrl])}"/>
+                </apex:column>
+
+                <apex:column style="width:3%;">
+                    <apex:facet name="header">편집</apex:facet>
+                    <apex:commandLink value="편집" action="{!URLFOR($Page.BookEdit, null, [bookId=result.Id, retURL=currentUrl, saveURL=saveUrl])}"/>
+                </apex:column>
+
+                <apex:column value="{!result.BookNo__c}" headerValue="도서 번호" style="width:10%;"/>
+                <apex:column value="{!result.Name}" headerValue="도서명" style="width:20%;"/>
+                <apex:column value="{!result.BookType__c}" headerValue="도서 구분" style="width:10%;"/>
+                <apex:column value="{!result.Author__c}" headerValue="저자" style="width:24%;"/>
+                <apex:column value="{!result.Publisher__c}" headerValue="출판사" style="width:30%;"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
