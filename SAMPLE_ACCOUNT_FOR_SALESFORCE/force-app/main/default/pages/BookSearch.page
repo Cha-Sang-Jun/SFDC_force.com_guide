@@ -35,6 +35,12 @@
                     <apex:outputText value="출판사"/>
                     <apex:inputText value="{!srchCndtnPublisher}"/>
                 </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="대여 유무"/>
+                    <apex:selectList value="{!srchCndtnIsLental}" size="1">
+                        <apex:selectOptions value="{!isLentalSelItems}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
             </apex:pageBlockSection>
         </apex:pageBlock>
 
@@ -60,8 +66,14 @@
                 <apex:column value="{!result.BookNo__c}" headerValue="도서 번호" style="width:10%;"/>
                 <apex:column value="{!result.Name}" headerValue="도서명" style="width:20%;"/>
                 <apex:column value="{!result.BookType__c}" headerValue="도서 구분" style="width:10%;"/>
-                <apex:column value="{!result.Author__c}" headerValue="저자" style="width:24%;"/>
-                <apex:column value="{!result.Publisher__c}" headerValue="출판사" style="width:30%;"/>
+                <apex:column value="{!result.Author__c}" headerValue="저자" style="width:20%;"/>
+                <apex:column value="{!result.Publisher__c}" headerValue="출판사" style="width:24%;"/>
+
+                <apex:column style="width:10%;">
+                    <apex:facet name="header">대여 유무</apex:facet>
+                    <apex:outputText value="미대여" rendered="{!NOT(result.IsLent__c)}"/>
+                    <apex:outputText value="대여중" rendered="{!result.IsLent__c}"/>
+                </apex:column>
             </apex:pageBlockTable>
         </apex:pageBlock>
     </apex:form>

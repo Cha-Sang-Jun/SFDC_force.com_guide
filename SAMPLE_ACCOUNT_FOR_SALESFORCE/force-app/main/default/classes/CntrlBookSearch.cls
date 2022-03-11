@@ -36,11 +36,13 @@ public class CntrlBookSearch {
     public String srchCndtnBookType { get; set; }   // 도서 구분
     public String srchCndtnAuthor { get; set; }     // 저자
     public String srchCndtnPublisher { get; set; }  // 출판사
+    public String srchCndtnIsLental { get; set; }   // 대여 유무
 
     /**
      * @description 선택 항목 타입의 선택지 리스트
      */
     public List<SelectOption> bookTypeSelItems { get; set; }    // 도서 구분의 선택지
+    public List<SelectOption> isLentalSelItems { get; set; }    // 대여 유무의 선택지
 
     /**
      * @description 생성자
@@ -61,6 +63,7 @@ public class CntrlBookSearch {
 
         // 선택 항목 타입의 선택지 습득
         bookTypeSelItems = getBookTypeItems();      // 도서 구분
+        isLentalSelItems = getIsLentalItems();      // 대여 유무
     }
 
     /**
@@ -119,5 +122,21 @@ public class CntrlBookSearch {
         }
 
         return bookTypeSelList;
+    }
+
+    /**
+     * @description 선택 항목 타입의 선택지 습득
+     * @return 대여 유무 구분의 선택지
+     */
+    private List<SelectOption> getIsLentalItems() {
+
+        List<SelectOption> isLentalSelList = new List<SelectOption>();
+
+        // 첫 번째 선택지에 '공백'을 추가
+        isLentalSelList.add(new SelectOption('', ''));
+        isLentalSelList.add(new SelectOption('false', '미대여'));
+        isLentalSelList.add(new SelectOption('true', '대여중'));
+
+        return isLentalSelList;
     }
 }

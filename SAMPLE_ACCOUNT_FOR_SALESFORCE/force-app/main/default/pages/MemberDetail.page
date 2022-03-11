@@ -1,68 +1,80 @@
-<apex:page controller="CntrlMemberDetail" sidebar="false">
+<apex:page controller="CntrlBookSearch" sidebar="false">
     <apex:form id="form">
-        <apex:sectionHeader title="회원 상세 정보" />
-        <apex:pageMessage id="messagearea" showDetail="false" />
+        <apex:sectionHeader title="도서 검색"/>
+        <apex:pageMessages id="messagearea" showDetail="false"/>
 
-        <apex:pageBlock rendered="{!NOT(ISBLANK(member))}">
-            <apex:pageBlockButtons>
-                <apex:commandButton value="편집" action="{!edit}" />
-                <apex:commandButton value="삭제" action="{!del}" onclikc="if(confirm('삭제하시겠습니까?')) {return true}; return false;" />
-                <apex:commandButton value="돌아가기" action="{!returnPage}" />
+        <apex:pageBlock title="검색 조건" mode="edit">
+
+            <!-- 생성한 블록의 하단에 버튼을 추가 -->
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="검색" action="{!search}"/>
+                <apex:commandButton value="돌아가기" action="{!returnPage}"/>
             </apex:pageBlockButtons>
 
-            <!-- 회원 정보 -->
-            <aepx:pageBlockSection columns="1" showHeader="true" collapsible="true" title="회원 정보">
-                <apex:outputField value="{!member.MemberNo__c}" label="회원번호" />
-                <apex:outputField value="{!member.Name}" labe="회원명" />
-
-                <apex:pageBlockSectionItem>
-                    <apex:outputText value="회원 등록일" />
-                    <apex:outputText value="{!Text(Year(member.RegistDate__c)) + '/' + LPAD(TEXT(MONTH(member.RegistDate__c)), 2, '0') + '/' + LPAD(TEXT(DAY(member.RegistDate__c)), 2, '0')}"
-                    />
+        	<!-- 검색 조건 -->
+            <apex:pageBlockSection columns="1" showHeader="true">
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="도서 번호"/>
+                    <apex:inputText value="{!srchCndtnBookNo}"/>
                 </apex:pageBlockSectionItem>
-
-                <apex:outputField value="{!member.Phone__c}" label="전화번호" />
-                <apex:outputField value="{!member.Email__c}" label="이메일 주소" />
-
-                <apex:pageBlockSectionItem>
-                    <apex:outputText value="대여 유무" />
-                    <!-- <aepx:pageBlockSectionItem> 의 내부에서는 2가지의 요소밖에 사용할 수 없기 떄문에,
-    그 문제를 해결하기 위해 <apex:outputPanel> 로 복수의 요소를 하나로 취급하는 방법을 사용 -->
-                    <apex:outputPanel>
-                        <apex:outputText value="미대여" rendered="{!NOT(member.IsLental__c)}" />
-                        <apex:outputText value="대여중" rendered="{!member.IsLental__c" />
-                    </apex:outputPanel>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="도서명"/>
+                    <apex:inputText value="{!srchCndtnBookName}"/>
                 </apex:pageBlockSectionItem>
-
-                <apex:outputField value="{!member.ReturnBook__c}" label="반납 유무" />
-            </aepx:pageBlockSection>
-
-            <!-- 대여 도서 목록 -->
-            <apex:pageBlockSection columns="1" showHeader="ture" collapsible="true" title="대여 중인 도서">
-
-                <apex:outputText value="대여 중인 도서가 없습니다." rendered="{!borrowBookList.size == 0}" />
-
-                <!-- 대여 도서 목록을 표 형식으로 표시 -->
-                <apex:pageBlockTable vlaue="{borrowBookList}" var="bBook" rendered="{!borrowBookList.size > 0">
-                    <apex:column value="{!bBook.BookNo__c" />
-                    <apex:column value="{!bBook.Name}" />
-                    <apex:column value="{!bBook.BookType__c}" />
-                    <apex:column value="{!bBook.Author__c}" />
-                    <apex:column value="{!bBook.Publisher__c}" />
-
-                    <apex:column>
-                        <apex:facet name="header"> 대여일 </apex:facet>
-                        <apex:outputText value="{TEXT(YEAR(bBook.LentDate__c)) + '/' + LPAD(TEXT(MONTH(bBook.LentDate__c)), 2, '0') + '/' + LPAD(TEXT(DAY(bBook.LentDate__c)), 2, '0')}"
-                        />
-                    </apex:column>
-
-
-                    <apex:column>
-                        <apex:facet name="header"> 반납일 </apex:facet>
-                        <apex:outputText value="{TEXT(YEAR(bBook.ReturnDate__c)) + '/' + LPAD(TEXT(MONTH(bBook.ReturnDate__c)), 2, '0') + '/' + LPAD(TEXT(DAY(bBook.ReuturnDate__c)), 2, '0')}"
-                        />
-                    </apex:column>
-                </apex:pageBlockTable>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="도서 구분"/>
+                    <apex:selectList value="{!srchCndtnBookType}" size="1">
+                        <apex:selectOptions value="{!bookTypeSelItems}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="저자"/>
+                    <apex:inputText value="{!srchCndtnAuthor}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="출판사"/>
+                    <apex:inputText value="{!srchCndtnPublisher}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="대여 유무"/>
+                    <apex:selectList value="{!srchCndtnIsLental}" size="1">
+                        <apex:selectOptions value="{!isLentalSelItems}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
             </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <!-- 검색 결과 -->
+        <apex:pageBlock title="검색 결과">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="도서 추가" action="{!newBook}"/>
+            </apex:pageBlockButtons>
+
+            <!-- 검색 결과를 표 형식으로 표시 -->
+            <apex:pageBlockTable value="{!srchRsltBookList}" var="result" rendered="{!srchRsltBookList.size > 0}">
+
+                <apex:column style="width:3%;">
+                    <apex:facet name="header">상세</apex:facet>
+                    <apex:commandLink value="상세" action="{!URLFOR($Page.BookDetail, null, [bookId=result.Id, retURL=currentUrl])}"/>
+                </apex:column>
+
+                <apex:column style="width:3%;">
+                    <apex:facet name="header">편집</apex:facet>
+                    <apex:commandLink value="편집" action="{!URLFOR($Page.BookEdit, null, [bookId=result.Id, retURL=currentUrl, saveURL=saveUrl])}"/>
+                </apex:column>
+
+                <apex:column value="{!result.BookNo__c}" headerValue="도서 번호" style="width:10%;"/>
+                <apex:column value="{!result.Name}" headerValue="도서명" style="width:20%;"/>
+                <apex:column value="{!result.BookType__c}" headerValue="도서 구분" style="width:10%;"/>
+                <apex:column value="{!result.Author__c}" headerValue="저자" style="width:20%;"/>
+                <apex:column value="{!result.Publisher__c}" headerValue="출판사" style="width:24%;"/>
+
+                <apex:column style="width:10%;">
+                    <apex:facet name="header">대여 유무</apex:facet>
+                    <apex:outputText value="미대여" rendered="{!NOT(result.IsLent__c)}"/>
+                    <apex:outputText value="대여중" rendered="{!result.IsLent__c}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
     </apex:form>
 </apex:page>

@@ -17,4 +17,9 @@ public class ConstUrlParameter {
      * @description 도서 ID의 URL 파라미터명
      */
     public static final String PARAM_NAME_BOOK_ID = 'bookId';
+
+    /**
+     * @description 회원 ID의 URL 파라미터명
+     */
+    public static final String PARAM_NAME_MEMBER_ID = 'memberId';
 }

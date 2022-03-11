@@ -36,6 +36,15 @@
                 <apex:inputField value="{!book.Author__c}" label="저자"/>
                 <apex:inputField value="{!book.Publisher__c}" label="출판사"/>
             </apex:pageBlockSection>
+
+            <!-- 대여 정보 -->
+            <apex:pageBlockSection columns="1" showHeader="true" collapsible="true" title="대여 정보">
+                <apex:inputField value="{!book.IsLent__c}" label="대여 유무"/>
+                <apex:outputField value="{!book.LenderNo__c}" label="대여자 번호" rendered="{!NOT(ISBLANK(book.LenderNo__c))}"/>
+                <apex:inputField value="{!book.Lender__c}" label="대여자 이름"/>
+                <apex:inputField value="{!book.LentDate__c}" label="대여일"/>
+                <apex:inputField value="{!book.ReturnDate__c}" label="반납일"/>
+            </apex:pageBlockSection>
         </apex:pageBlock>
     </apex:form>
 </apex:page>

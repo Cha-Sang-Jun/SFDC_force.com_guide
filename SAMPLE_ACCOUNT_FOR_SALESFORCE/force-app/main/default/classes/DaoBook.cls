@@ -17,12 +17,57 @@ public with sharing class DaoBook {
             	BookNo__c,
             	BookType__c,
             	Author__c,
-            	Publisher__c
+            	Publisher__c,
+                IsLent__c,
+                LenderNo__c,
+                LenderName__c,
+                Lender__c,
+// 조회 관계로 참조하고 있는 개체의 레코드를 참조하는 방법
+// : 참조레코드의 API참조명에서 __c를 __r로 바꾸고 참조 상대 레코드명을 지정
+                Lender__r.MemberNo__c,
+                Lender__r.Name,
+                LentDate__c,
+                ReturnDate__c
             FROM
             	Book__c
             WHERE
             	// SOQL에서는 변수 등을 사용하기 위해 변수의 앞에 "콜론(:)"을 붙여주어야 함
             	Id = :bookId
+        ];
+
+        return bookList;
+    }
+
+    /**
+     * @description 회원ID에 해당하는 도서 SELECT
+     * @param memIds 회원ID의 Set
+     * @return 도서 리스트
+     */
+    public static List<Book__c> findByMemberId(Set<ID> memIds) {
+
+        List<Book__c> bookList = [
+            SELECT
+            	Id,
+            	Name,
+            	BookNo__c,
+            	BookType__c,
+            	Author__c,
+            	Publisher__c,
+                IsLent__c,
+                LenderNo__c,
+                LenderName__c,
+// 조회 관계로 참조하고 있는 개체의 레코드를 참조하는 방법
+// : 참조레코드의 API참조명에서 __c를 __r로 바꾸고 참조 상대 레코드명을 지정
+                Lender__c,
+                Lender__r.MemberNo__c,
+                Lender__r.Name,
+                LentDate__c,
+                ReturnDate__c
+            FROM
+            	Book__c
+            WHERE
+            	// SOQL에서는 변수 등을 사용하기 위해 변수의 앞에 "콜론(:)"을 붙여주어야 함
+            	Lender__c IN :memIds
         ];
 
         return bookList;
@@ -47,6 +92,14 @@ public with sharing class DaoBook {
                         + ', BookType__c '
                         + ', Author__c '
                         + ', Publisher__c '
+                        + ', IsLent__c '
+                        + ', LenderNo__c '
+                        + ', LenderName__c '
+                        + ', Lender__c '
+                        + ', Lender__r.Name '
+                        + ', Lender__r.MemberNo__c '
+                        + ', LentDate__c '
+                        + ', ReturnDate__c '
                     + ' FROM '
                         + ' Book__c ';
 

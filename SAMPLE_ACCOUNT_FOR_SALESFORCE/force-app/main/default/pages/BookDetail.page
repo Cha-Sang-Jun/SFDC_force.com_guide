@@ -18,6 +18,25 @@
                 <apex:outputField value="{!book.Author__c}" label="저자"/>
                 <apex:outputField value="{!book.Publisher__c}" label="출판사"/>
             </apex:pageBlockSection>
+
+            <!-- 대여 정보 -->
+            <apex:pageBlockSection columns="1" showHeader="true" collapsible="true" title="대여 정보">
+                <apex:outputField value="{!book.IsLent__c}" label="대여 유무"/>
+
+<!-- 조회 관계로 참조 중인 개체의 레코드를 참조하는 방법 -->
+                <apex:outputField value="{!book.Lender__r.MemberNo__c}" label="대여자 번호"/>
+                <apex:outputField value="{!book.Lender__r.Name}" label="대여자 이름"/>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="대여일"/>
+                    <apex:outputText value="{!TEXT(YEAR(book.LentDate__c)) + '/' + LPAD(TEXT(MONTH(book.LentDate__c)), 2, '0') + '/' + LPAD(TEXT(DAY(book.LentDate__c)), 2, '0')}" rendered="{!NOT(ISBLANK(book.LentDate__c))}"/>
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem >
+                    <apex:outputText value="반납일"/>
+                    <apex:outputText value="{!TEXT(YEAR(book.ReturnDate__c)) + '/' + LPAD(TEXT(MONTH(book.ReturnDate__c)), 2, '0') + '/' + LPAD(TEXT(DAY(book.ReturnDate__c)), 2, '0')}" rendered="{!NOT(ISBLANK(book.ReturnDate__c))}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
         </apex:pageBlock>
     </apex:form>
 </apex:page>

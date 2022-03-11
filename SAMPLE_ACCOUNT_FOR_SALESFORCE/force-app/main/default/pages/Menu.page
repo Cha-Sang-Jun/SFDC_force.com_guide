@@ -11,6 +11,10 @@
             <apex:outputText value="도서 관리 프로그램" style="font-size:20pt; font-weight:bold;"/>
             <br/><br/><br/>
 
+            <!-- 회원 검색 화면으로 화면전이 및 이전 화면 URL을 파라미터로 전달 -->
+            <apex:commandButton value="회원 관리" action="{!URLFOR($Page.MemberSearch, null, [retURL=currentUrl])}" styleClass="cmdBtn" style="font-size:20pt;"/>
+            <br/><br/>
+
             <!-- 도서 검색 화면으로 화면전이 및 이전 화면 URL을 파라미터로 전달 -->
             <apex:commandButton value="도서 관리" action="{!URLFOR($Page.BookSearch, null, [retURL=currentUrl])}" styleClass="cmdBtn" style="font-size:20pt;"/>
         </center>

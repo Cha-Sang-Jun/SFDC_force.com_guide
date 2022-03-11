@@ -70,6 +70,22 @@ public class CntrlBookEdit {
             return null;
         }
 
+        // 대여자 정보를 설정
+        // ★조회 관계로 참조중인 개체의 레코드를 참조하는 방법★
+        // 조회 관계 레코드의 API참조명에서 "__c" 를 "__r"로 변경한 후, 참조중인 개체에서 참조할 레코드의 API참조명을 지정
+        if (String.isBlank(book.Lender__c)) {
+            // 대여자가 지정되지 않은 경우, 도서의 대여자 정보를 클리어
+            
+            book.LenderNo__c = null;			// 회원 개체의 "회원 번호" 레코드 참조
+            book.LenderName__c = null;			// 회원 개체의 "회원명" 레코드 참조
+
+        } else {
+            // 대여자가 지정된 경우, 도서의 대여자 정보를 설정
+
+            book.LenderNo__c = book.Lender__r.MemberNo__c;		// 회원 개체의 "회원 번호" 레코드 참조
+            book.LenderName__c = book.Lender__r.Name;			// 회원 개체의 "회원명" 레코드 참조
+        }
+
         Savepoint sp = Database.setSavepoint();
 
         try {
@@ -139,6 +155,20 @@ public class CntrlBookEdit {
             // 도서명 미입력
 
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, '[도서명]을 입력해주세요.'));
+            result = true;
+        }
+
+        if (book.IsLent__c && String.isBlank(book.Lender__c)) {
+            // 대여유무가 "대여중(TRUE)"인데, 대여자가 설정 되어있지 않은 경우
+
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, '[대여 유무]: 대여자 정보를 설정해주세요.'));
+            result = true;
+        }
+
+        if (!book.IsLent__c && String.isNotBlank(book.Lender__c)) {
+            // 대여유무가 "미대여(FALSE)"인데, 대여자가 설정 되어있는 경우
+
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, '[대여 유무]: 대여자 정보가 설정되어 있기 때문에, "미대여"는 선택할 수 없습니다.'));
             result = true;
         }
 
