@@ -1,0 +1,11 @@
+<apex:page controller="CntrlCsvDownload" sidebar="false">
+    <apex:form id="form">
+        <apex:pageBlock title="CSV출력">
+
+        <!-- CSV 출력 실행 버튼 -->
+        
+        <apex:commandButton value="CSV출력" action="{!exportToCsv}" />
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>
