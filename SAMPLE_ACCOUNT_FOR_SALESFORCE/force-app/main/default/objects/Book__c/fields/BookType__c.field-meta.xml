@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BookType__c</fullName>
+    <externalId>false</externalId>
+    <label>구분</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>시</fullName>
+                <default>false</default>
+                <label>시</label>
+            </value>
+            <value>
+                <fullName>소설</fullName>
+                <default>false</default>
+                <label>소설</label>
+            </value>
+            <value>
+                <fullName>수필</fullName>
+                <default>false</default>
+                <label>수필</label>
+            </value>
+            <value>
+                <fullName>자서전</fullName>
+                <default>false</default>
+                <label>자서전</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

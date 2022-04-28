@@ -1,4 +1,4 @@
-<apex:page controller="CntrlSendMail" sidebar="false">
+<apex:page controller="CntrlSendMail" sidebar="false" renderAs="pdf">
     <apex:form id="form">
         <apex:pageMessages id="messagearea" showDetail="false"/>
 
@@ -36,4 +36,3 @@
         </apex:pageBlock>
     </apex:form>
 </apex:page>
-

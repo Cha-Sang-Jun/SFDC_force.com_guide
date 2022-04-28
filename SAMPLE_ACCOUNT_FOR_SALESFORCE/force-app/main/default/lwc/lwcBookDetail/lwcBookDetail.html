@@ -1,0 +1,59 @@
+<template>
+
+    <!-- Book List -->
+    <lightning-card title="Book List">
+        <div class="slds-p-bottom_large slds-p-left_large" style="width:900px">
+            <template if:true={result}>
+                <lightning-datatable key-field="id" columns={columns} data={result} hide-checkbox-column="true"
+                    onrowaction={handleRowActions}>
+                </lightning-datatable>
+            </template>
+        </div>
+
+        <!-- Spinner -->
+        <div if:true={showLoadingSpinner}>
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+    </lightning-card>
+
+
+    <!-- Insert Book -->
+    <lightning-card title="Insert Book">
+        <div class="slds-p-bottom_large slds-p-left_large" style="width:900px">
+
+            <!--        <lightning-record-edit-form object-api-name="Book__c">
+                <lightning-input-field field-name="Name"> </lightning-input-field>
+                <lightning-input-field field-name="BookNo__c"> </lightning-input-field>
+                <lightning-input-field field-name="BookType__c"> </lightning-input-field>
+                <lightning-button type="submit" name="submit" label="Insert Book"> </lightning-button>
+            </lightning-record-edit-form>   -->
+
+            <lightning-input type="text" label="책 이름" onchange={handleNameChange} required="true"> </lightning-input>
+            <lightning-input type="text" label="도서번호" onchange={handleBookNoChange} required="true"> </lightning-input>
+            <lightning-input type="text" label="장르" onchange={handleBookTypeChange} required="true"> </lightning-input>
+            <lightning-button type="submit" label="Insert Book" onclick={handleInsert}> </lightning-button>
+        </div>
+    </lightning-card>
+
+
+    <!-- Update Book -->
+    <lightning-card title="Update Book">
+        <div class="slds-p-bottom_large slds-p-left_large" style="width:900px">
+            <template if:true={book.data}>
+                <lightning-input label="Id" value={book.data.Id}>
+                </lightning-input>
+                <lightning-input label="책 이름" value={book.data.Name} data-field="Name" onchange={handleChange}>
+                </lightning-input>
+                <lightning-input label="도서 번호" value={book.data.BookNo__c} data-field="BookNo__c"
+                    onchange={handleChange}> </lightning-input>
+                <lightning-input label="장르" value={book.data.BookType__c} data-field="BookType__c"
+                    onchange={handleChange}> </lightning-input>
+                <lightning-button label="수정" variant="brand" onclick={updateBook}> </lightning-button>
+            </template> 
+
+        </div>
+
+        <template if:true={book__c.error}></template>
+    </lightning-card>
+
+</template>

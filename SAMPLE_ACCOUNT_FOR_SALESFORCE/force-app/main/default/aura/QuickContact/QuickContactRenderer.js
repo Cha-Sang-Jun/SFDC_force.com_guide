@@ -1,0 +1,23 @@
+({
+    // Your renderer method overrides go here
+    render:function(component,helper) {
+     // Call Base render method
+     var a = this.superRender();
+     // custom rendering
+     console.log("This text is from render function which gets executed when component is initiated");
+     return a;
+    },
+    afterRender:function(component,helper) {
+     //Call Base afterrender method
+     this.superAfterRender();
+     // Interact with Dom elements
+     console.log("This text should come after render() is over");
+     console.log("This text is from afterRender function");
+    },
+    rerender:function(component,helper) {
+     //call Base rerender method
+     this.superRerender();
+     //custom rerendering
+     console.log("This text is from rerender function…which gets called whenever and data change occurs");
+    }
+})

@@ -1,0 +1,15 @@
+.THIS .btn {
+
+    background: linear-gradient(90deg, #be2edd, #5f27cd);
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 45px;
+    border: none;
+    border-radius: 25px;
+    outline: none;
+    cursor: pointer;
+    left: 50%;
+}
+.THIS .btn:hover {
+    background: linear-gradient(90deg, #808000, #806000);
+}

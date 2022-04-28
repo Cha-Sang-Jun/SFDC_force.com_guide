@@ -1,0 +1,27 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="AuraPractice">
+
+Test Message !!!
+
+    <!-- Attributes -->
+    <aura:attribute name="conList" type="Contact[]"/>
+
+    <!-- handler-->
+    <!-- <aura:handler name="init" value="{!this}" action="{!c.init}" /> -->
+
+    <!-- button -->
+    <ui:button aura:id="button" buttonTitle="getContactList" class="button" label="연락처 리스트" press="{!c.init}" />
+    
+    <!-- account list -->
+    <lightning:card title="Contact List">
+        <p class="slds-p-horizontal--small">
+            <aura:iteration items="{!v.conList}" var="con">
+                <lightning:card title="{!con.Name}" iconName="standard:contact">
+                    <p class="slds-p-horizontal--small">
+                        Name : {!con.Name}
+                        Email:  {!con.Email}
+                    </p>
+                </lightning:card>
+            </aura:iteration>
+        </p>
+    </lightning:card>
+</aura:component>

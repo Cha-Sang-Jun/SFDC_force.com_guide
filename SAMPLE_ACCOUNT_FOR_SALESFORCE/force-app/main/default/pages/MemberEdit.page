@@ -4,7 +4,7 @@
         <apex:pageMessages id="messagearea" showDetail="false"/>
 
         <apex:pageBlock rendered="{!NOT(ISBLANK(member))}">
-        	<apex:pageBlockButtons >
+            <apex:pageBlockButtons >
                 <apex:commandButton value="저장" action="{!save}"/>
                 <apex:commandButton value="취소" action="{!cancel}"/>
             </apex:pageBlockButtons>
@@ -17,7 +17,7 @@
 
                 <apex:pageBlockSectionItem labelStyle="padding-top:5px;">
                     <apex:outputText value="회원 번호"/>
-                	<!-- 필수 항목란 표시 설정-->
+                    <!-- 필수 항목란 표시 설정-->
                     <apex:outputPanel layout="block" styleClass="requiredInput">
                         <apex:outputPanel layout="block" styleClass="requiredBlock"/>
                         <apex:inputField value="{!member.MemberNo__c}"/>

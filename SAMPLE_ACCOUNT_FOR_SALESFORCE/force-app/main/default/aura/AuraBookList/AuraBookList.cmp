@@ -1,0 +1,67 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="CntrlBookList">
+
+    <!-- Attributes -->
+    <aura:attribute name="bookList" type="Book__c" />
+    <aura:attribute name="insertBook" type="Book__c" default="{ sobjectName : 'Book__c',
+                    Name : '',
+                    BookNo__c : '',
+                    BookType__c : ''} " />
+
+    <aura:attribute name="deleteBook" type="Book__c" />
+    <aura:attribute name="selectById" type="Book__c" />
+    <aura:attribute name="updateBook" type="Book__c" />
+
+    <!-- handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+    <!-- BookList -->
+    <lightning:card title="Book List">
+        <p class="slds-p-horizontal--small">
+            <aura:iteration items="{!v.bookList}" var="book">
+                <lightning:card title="{!book.Name}">
+                    <p class="slds-p-horizontal--small">
+                        책 이름 : {!book.Name} <br />
+                        번호 : {!book.BookNo__c} <br />
+                        장르 : {!book.BookType__c} <br />
+                    </p>
+                    <p data-label="icon" class="slds-col slds-size_1-of-12" onclick="{!c.delete}" id="{!book.Id}">
+                        <lightning:icon iconName="utility:delete" alternative-text="Delete" title="Delete"
+                            size="small" />
+                    </p>
+                    <td data-label="icon" class="slds-col slds-size_1-of-12" onclick="{!c.select}" id="{!book.Id}">
+                        <lightning:icon id="{!book.Id}" iconName="action:approval" size="small" />
+                    </td>
+                </lightning:card>
+            </aura:iteration>
+        </p>
+    </lightning:card>
+
+    <!-- Update Book UI-->
+    <lightning:card title="책 정보수정">
+        <div class="slds-p-around_x-small">
+            <!-- <aura:iteration items="{!v.selectById}" var="book"> -->
+                <lightning:card title="{!v.selectById.Name}">
+                    <!-- <ui:inputText label="Id" class="field" value="{!v.selectById.Id}" /> 
+                    <ui:inputText label="책 이름" class="field" value="{!v.selectById.Name}" />  -->
+                    <ui:inputText label="번호" class="field" value="{!v.selectById.BookNo__c}"  />
+                    <ui:inputText label="장르" class="field" value="{!v.selectById.BookType__c}" /> <br/>
+                   <!-- <ui:inputText label="장르" class="field" value="{!v.selectById.BookType__c}" updateOn="click" /> -->
+                   <!-- ui:inputText 란에 updateOn="click" 을 붙이니 해당 필드 update만 실행되지 않았다. value 값 자체를 새로 입력된
+                        정보로 못가져오는듯 하다. 확인필요!!! -->
+                    <lightning:button label="Update Book" class="btn" onclick="{!c.update}" />
+                </lightning:card>
+           <!-- </aura:iteration> -->
+        </div>
+    </lightning:card>
+
+    <!-- InserBook -->
+    <lightning:card title="Insert Book">
+        <div class="slds-p-around_x-small">
+            <lightning:input type="text" value="{!v.insertBook.Name}" label="책 이름" required="true" />
+            <lightning:input type="text" value="{!v.insertBook.BookNo__c}" label="번호" required="true" />
+            <lightning:input type="text" value="{!v.insertBook.BookType__c}" label="장르" />
+            <lightning:button label="Insert Book" class="btn" onclick="{!c.doSave}" />
+        </div>
+    </lightning:card>
+
+</aura:component>

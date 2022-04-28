@@ -1,0 +1,32 @@
+https://api.androidhive.info/contacts/
+
+Http http = new Http();
+HttpRequest request = new HttpRequest();
+request.setEndpoint('https://api.androidhive.info/contacts/');
+request.setMethod('GET');
+HttpResponse response = http.send(request);
+
+// If the request is successful, parse the JSON response.
+if(response.getStatusCode() == 200) {
+    System.debug(response.getBody());
+
+    TestApiClass result = TestApiClass.parse(response.getBody());
+    for(TestApiClass.Items itm : result.itmes) {
+        System.debug('Received the following statistics : ');
+        System.debug(itm.statistics);
+    }
+}
+
+if(response.getStatusCode() == 200) {
+    // Deserialize the JSON string in to collections of primitive data types.
+    Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(reponse.getBody());
+
+    // Cast the values in the 'animals' key as a list
+    List<Object> items = (List<Object>) results.get('items');
+
+    for(Object items : items) {
+        Map<String, Object> childItems = (Map<String, Object>)item;
+        System.debug('Received the following statistics :');
+        System.debug(childItems.get('statistics'));
+    }
+}

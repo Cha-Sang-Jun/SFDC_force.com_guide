@@ -1,0 +1,28 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="test">
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    	hello
+    
+    <!-- Attributes -->
+    <aura:attribute name="message" type="String" default="default"/>
+    <aura:attribute name="accList" type="Account[]"/>
+    
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    
+    
+    <!-- account list -->
+    <lightning:card title="Accounts List">
+        <p class="slds-p-horizontal--small">
+            <aura:iteration items="{!v.accList}" var="acc">
+                <lightning:card title="{!acc.Name}" iconName="standard:account">
+                    <p class="slds-p-horizontal--small">
+                        Account Number: {!acc.AccountNumber}
+                    </p>
+                </lightning:card>
+            </aura:iteration>
+        </p>
+    </lightning:card>
+</aura:component>

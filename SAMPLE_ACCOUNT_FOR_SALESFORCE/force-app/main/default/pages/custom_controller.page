@@ -1,0 +1,19 @@
+<apex:page controller="custom_controller" >
+    <apex:form >
+        <apex:pageBlock title="Contacts List" id="contacts_list">
+            <!-- Contacts List goes here -->
+            <apex:pageBlockTable value="{! Contact}" var="ct"> <!-- {! Contacts} => getContacts 메서드 호출 -->
+                
+                <!-- <apex:column value="{! ct.FirstName}" />
+				<apex:column value="{! ct.LastName}" />
+				sortByFirstName / sortByLastName 메서드 실행 -->
+                
+                <apex:column value="{! ct.FirstName }" />
+                <apex:column value="{! ct.LastName}" />
+                <apex:column value="{! ct.Title}" />
+                <apex:column value="{! ct.Email}" />
+                
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

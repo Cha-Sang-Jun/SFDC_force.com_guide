@@ -1,0 +1,6 @@
+<design:component>
+
+    <!-- <design:attribute name="backgroundColor" label="Background Color" description="Enter Background Color"/>
+     <design:attribute name="textFontSize" label="Font Size" description="Enter font size without 'px' [i.e 15]"/>
+      <design:attribute name="textColor" label="Font Color" description="Enter font Color" />   -->
+</design:component>

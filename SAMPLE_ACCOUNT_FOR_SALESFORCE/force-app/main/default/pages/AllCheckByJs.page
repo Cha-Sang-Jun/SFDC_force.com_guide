@@ -44,10 +44,6 @@
                     <apex:commandLink id="selectLink" value="선택" onclick="selectMember('{!member.memName}');"/>
                 </apex:column>
 
-            <!-- 화면 메세지 표시란 -->
-                <apex:pageMessages id="messagearea" showDetail="false"; />
-                <apex:commandButton value="출력" oncomplete="selectMember(mName)" />
-
                 <apex:column style="width:2%; text-align:center;">
                     <!-- 헤더 부분에 체크박스 추가 -->
                     <apex:facet name="header">

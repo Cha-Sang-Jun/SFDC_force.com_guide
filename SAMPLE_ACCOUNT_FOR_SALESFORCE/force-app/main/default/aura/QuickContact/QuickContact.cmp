@@ -1,0 +1,24 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId" access="global" controller="ContactListController">
+    <aura:attribute name="AccountId" type="String" />
+    <aura:attribute name="backgroundColor" type="String" default="#000000"/>
+    <aura:attribute name="textFontSize" type="Integer" default="18" />
+    <aura:attribute name="textColor" type="String" default="#e81717" />
+    <aura:dependency resource="markup://force:editRecord" type="EVENT" />
+<!--    <aura:registerEvent name="quickContact" type="c:QuickContactEvent"/> -->
+    <lightning:navigation aura:id="navService"/>
+    <aura:attribute name="createContact" type="Contact" default="{ 
+                                                                 sobjectName : 'Contact',
+                                                                 FirstName: '',
+                                                                 LastName : '',
+                                                                 Email: '',
+                                                                 Phone :''}" />
+    <div style="{!'padding:' + v.boxPadding +'px; background-color:' + v.backgroundColor}">    
+        <p style="{!'font-size:' + v.textFontSize + 'px; color:' + v.textColor}"> 
+            <div class="slds-p-around_x-small">
+                <lightning:input type="text" value ="{!v.createContact.FirstName}" label="First Name" required="true" />
+                <lightning:input type="text" value ="{!v.createContact.LastName}" label="Last Name" required="true" />
+                <lightning:input type="email" value="{!v.createContact.Email}" label="Email"/>
+                <lightning:input type="phone" value="{!v.createContact.Phone}" label="Phone"/>
+                <lightning:button label = "Create Contact" class = "btn" onclick = "{!c.doSave}" /> 
+            </div> </p> </div>
+</aura:component>

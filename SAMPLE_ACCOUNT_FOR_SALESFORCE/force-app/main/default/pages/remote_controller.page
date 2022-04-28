@@ -1,0 +1,47 @@
+<apex:page controller="remote_controller">
+   
+    <button onclick="getRemoteContact()"> Get Contact </button>
+    
+    <div id="responseErrors"></div>
+
+    <apex:pageBlock id="block">        
+        <apex:pageBlockSection id="blockSection" columns="2">
+
+                <span id="remoteContactId"></span>
+
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    <script type = "text/javascript">
+
+    function getRemoteContact() {
+
+        var i;
+
+        Visualforce.remoting.Manager.invokeAction(
+
+            //Invoking controller action getcon
+            '{!$RemoteAction.remote_controller.getcon}',
+            
+            function(result, event){
+
+               //We can access the records through the parameter result
+               //event.status determines if there is error or not 
+               if(event.status){
+                    document.getElementById('remoteContactId').innerHTML = 'Contact Name: <br/><br/>';
+
+                    for(i=0; i<result.length; i++) {                        
+                        document.getElementById('remoteContactId').innerHTML +=  result[i].Name +'<br/>';                    
+                    }                                       
+               }            
+
+            },
+
+            {escape: true}
+
+        );
+    }
+
+    </script>
+    
+</apex:page>

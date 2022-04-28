@@ -1,0 +1,9 @@
+<aura:documentation>
+
+             <aura:description>
+      <p>An <code>c:QuickContact</code> component is created to insert a contact to a corresponding account.</p>
+    </aura:description>
+             <aura:example name="QuickContact" ref="c:QuickContact" label="Quick Contact">
+                             <p>This example shows a simple setup of <code>QuickContact</code>.</p>
+             </aura:example>
+</aura:documentation>

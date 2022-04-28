@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Genrel__c</fullName>
+    <description>RTS \n
+RPG \n
+FPS \n
+액션</description>
+    <externalId>false</externalId>
+    <label>장르</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>RTS</fullName>
+                <default>false</default>
+                <label>RTS</label>
+            </value>
+            <value>
+                <fullName>FPS</fullName>
+                <default>false</default>
+                <label>FPS</label>
+            </value>
+            <value>
+                <fullName>RPG</fullName>
+                <default>false</default>
+                <label>RPG</label>
+            </value>
+            <value>
+                <fullName>액션</fullName>
+                <default>false</default>
+                <label>액션</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
